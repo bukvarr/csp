@@ -1,16 +1,26 @@
-﻿using System;
+using System;
 
 while (true)
 {
     Console.Write("Первое число (или 'q' для выхода): ");
     string input = Console.ReadLine();
-    if (input == "q") break;
-    double a = Convert.ToDouble(input);
+    if (string.IsNullOrWhiteSpace(input) || input == "q") break;
+    
+    if (!double.TryParse(input, out double a))
+    {
+        Console.WriteLine("Ошибка: введите корректное число!\n");
+        continue;
+    }
 
     Console.Write("Второе число: ");
     input = Console.ReadLine();
-    if (input == "q") break;
-    double b = Convert.ToDouble(input);
+    if (string.IsNullOrWhiteSpace(input) || input == "q") break;
+    
+    if (!double.TryParse(input, out double b))
+    {
+        Console.WriteLine("Ошибка: введите корректное число!\n");
+        continue;
+    }
 
     Console.Write("Операция (+, -, *, /): ");
     string op = Console.ReadLine();
@@ -20,7 +30,15 @@ while (true)
     if (op == "+") result = a + b;
     else if (op == "-") result = a - b;
     else if (op == "*") result = a * b;
-    else if (op == "/") result = a / b;
+    else if (op == "/") 
+    {
+        if (b == 0)
+        {
+            Console.WriteLine("Ошибка: деление на ноль!\n");
+            continue;
+        }
+        result = a / b;
+    }
     else
     {
         Console.WriteLine("Неверная операция!");
